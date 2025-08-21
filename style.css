@@ -1,0 +1,136 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+.main-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+h1, h3 {
+  margin: 0;
+  text-align: center;
+}
+
+.main-row {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.image-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 250px;
+}
+
+canvas {
+  border: 2px solid #555;
+  width: 250px;
+  height: 200px;
+  background: white;
+}
+
+input[type="file"] {
+  width: 100%;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.operation-panel, .filters-panel {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.operation-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 320px;
+}
+
+.operation-row {
+  display: grid;
+  grid-template-columns: 120px 70px 1fr;
+  align-items: center;
+  gap: 20px;
+}
+
+.filters-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 220px;
+}
+
+.filter-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 20px;
+}
+
+.filter-row label {
+  font-weight: 500;
+}
+
+input[type="number"] {
+  width: 60px;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+button {
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  min-width: 70px;
+  transition: background 0.2s;
+}
+
+.btn-green {
+  background: #4CAF50;
+  color: white;
+}
+
+.btn-green:hover {
+  background: #45a049;
+}
+
+.btn-blue {
+  background: #2196F3;
+  color: white;
+}
+
+.btn-blue:hover {
+  background: #1976D2;
+}
