@@ -6,7 +6,7 @@ body {
   padding: 20px;
 }
 
-.main-container {
+.container-principal {
   max-width: 1400px;
   margin: 0 auto;
   display: flex;
@@ -20,14 +20,14 @@ h1, h3 {
   text-align: center;
 }
 
-.main-row {
+.linha-principal {
   display: flex;
   gap: 30px;
   align-items: flex-start;
   justify-content: center;
 }
 
-.image-block {
+.bloco-imagem {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,7 +46,7 @@ input[type="file"] {
   width: 100%;
 }
 
-.checkbox-row {
+.linha-checkbox {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -54,13 +54,13 @@ input[type="file"] {
   white-space: nowrap;
 }
 
-.operation-panel, .filters-panel {
+.painel-operacoes, .painel-filtros {
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
 }
 
-.operation-panel {
+.painel-operacoes {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -71,14 +71,14 @@ input[type="file"] {
   width: 320px;
 }
 
-.operation-row {
+.linha-operacao {
   display: grid;
   grid-template-columns: 120px 70px 1fr;
   align-items: center;
   gap: 20px;
 }
 
-.filters-panel {
+.painel-filtros {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -89,14 +89,14 @@ input[type="file"] {
   width: 220px;
 }
 
-.filter-row {
+.linha-filtro {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 20px;
 }
 
-.filter-row label {
+.linha-filtro label {
   font-weight: 500;
 }
 
@@ -117,20 +117,20 @@ button {
   transition: background 0.2s;
 }
 
-.btn-green {
+.btn-verde {
   background: #4CAF50;
   color: white;
 }
 
-.btn-green:hover {
+.btn-verde:hover {
   background: #45a049;
 }
 
-.btn-blue {
+.btn-azul {
   background: #2196F3;
   color: white;
 }
 
-.btn-blue:hover {
+.btn-azul:hover {
   background: #1976D2;
 }

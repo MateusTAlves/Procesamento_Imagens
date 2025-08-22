@@ -1,177 +1,177 @@
-class ImageProcessor {
-  constructor(canvas1, canvas2, canvasOutput) {
-    this.canvas1 = canvas1;
-    this.canvas2 = canvas2;
-    this.canvasOutput = canvasOutput;
+class ProcessadorImagem {
+  constructor(tela1, tela2, telaResultado) {
+    this.tela1 = tela1;
+    this.tela2 = tela2;
+    this.telaResultado = telaResultado;
 
-    this.ctx1 = canvas1.getContext("2d");
-    this.ctx2 = canvas2.getContext("2d");
-    this.ctxOutput = canvasOutput.getContext("2d");
+    this.ctx1 = tela1.getContext("2d");
+    this.ctx2 = tela2.getContext("2d");
+    this.ctxResultado = telaResultado.getContext("2d");
 
-    this.image1 = null;
-    this.image2 = null;
+    this.imagem1 = null;
+    this.imagem2 = null;
     this._img1 = null;
     this._img2 = null;
   }
 
-  _fitSize(width, height, maxW = 250, maxH = 200) {
-    let w = width, h = height;
-    if (w > maxW) { h *= maxW / w; w = maxW; }
-    if (h > maxH) { w *= maxH / h; h = maxH; }
-    return { width: Math.round(w), height: Math.round(h) };
+  _ajustarTamanho(largura, altura, maxL = 250, maxA = 200) {
+    let l = largura, a = altura;
+    if (l > maxL) { a *= maxL / l; l = maxL; }
+    if (a > maxA) { l *= maxA / a; a = maxA; }
+    return { width: Math.round(l), height: Math.round(a) };
   }
 
-  loadImage(file, which = 1) {
-    const reader = new FileReader();
+  carregarImagem(arquivo, qual = 1) {
+    const leitor = new FileReader();
     const img = new Image();
-    reader.onload = e => {
+    leitor.onload = e => {
       img.src = e.target.result;
       img.onload = () => {
-        if (which === 1) {
-          const { width, height } = this._fitSize(img.naturalWidth, img.naturalHeight);
-          this.canvas1.width = width;
-          this.canvas1.height = height;
-          this.canvasOutput.width = width;
-          this.canvasOutput.height = height;
+        if (qual === 1) {
+          const { width, height } = this._ajustarTamanho(img.naturalWidth, img.naturalHeight);
+          this.tela1.width = width;
+          this.tela1.height = height;
+          this.telaResultado.width = width;
+          this.telaResultado.height = height;
 
           this.ctx1.clearRect(0, 0, width, height);
           this.ctx1.drawImage(img, 0, 0, width, height);
-          this.image1 = this.ctx1.getImageData(0, 0, width, height);
+          this.imagem1 = this.ctx1.getImageData(0, 0, width, height);
           this._img1 = img;
 
           if (this._img2) {
-            this.canvas2.width = width;
-            this.canvas2.height = height;
+            this.tela2.width = width;
+            this.tela2.height = height;
             this.ctx2.clearRect(0, 0, width, height);
             this.ctx2.drawImage(this._img2, 0, 0, width, height);
-            this.image2 = this.ctx2.getImageData(0, 0, width, height);
+            this.imagem2 = this.ctx2.getImageData(0, 0, width, height);
           }
 
-          this.showResult(this.image1);
+          this.mostrarResultado(this.imagem1);
         } else {
-          if (this.image1) {
-            const { width, height } = this.image1;
-            this.canvas2.width = width;
-            this.canvas2.height = height;
+          if (this.imagem1) {
+            const { width, height } = this.imagem1;
+            this.tela2.width = width;
+            this.tela2.height = height;
             this.ctx2.clearRect(0, 0, width, height);
             this.ctx2.drawImage(img, 0, 0, width, height);
-            this.image2 = this.ctx2.getImageData(0, 0, width, height);
+            this.imagem2 = this.ctx2.getImageData(0, 0, width, height);
           } else {
-            const { width, height } = this._fitSize(img.naturalWidth, img.naturalHeight);
-            this.canvas2.width = width;
-            this.canvas2.height = height;
+            const { width, height } = this._ajustarTamanho(img.naturalWidth, img.naturalHeight);
+            this.tela2.width = width;
+            this.tela2.height = height;
             this.ctx2.clearRect(0, 0, width, height);
             this.ctx2.drawImage(img, 0, 0, width, height);
-            this.image2 = this.ctx2.getImageData(0, 0, width, height);
+            this.imagem2 = this.ctx2.getImageData(0, 0, width, height);
           }
           this._img2 = img;
         }
       };
     };
-    reader.readAsDataURL(file);
+    leitor.readAsDataURL(arquivo);
   }
 
-  showResult(imageData) {
-    this.ctxOutput.putImageData(imageData, 0, 0);
+  mostrarResultado(dadosImagem) {
+    this.ctxResultado.putImageData(dadosImagem, 0, 0);
   }
 
-  add(value = 0) {
-    if (!this.image1) return;
-    const data = new Uint8ClampedArray(this.image1.data);
+  somar(valor = 0) {
+    if (!this.imagem1) return;
+    const dados = new Uint8ClampedArray(this.imagem1.data);
 
-    if (this.image2 && this.image2.width === this.image1.width && this.image2.height === this.image1.height) {
-      const data2 = this.image2.data;
-      for (let i = 0; i < data.length; i += 4) {
-        data[i] = Math.min(255, data[i] + data2[i]);
-        data[i + 1] = Math.min(255, data[i + 1] + data2[i + 1]);
-        data[i + 2] = Math.min(255, data[i + 2] + data2[i + 2]);
+    if (this.imagem2 && this.imagem2.width === this.imagem1.width && this.imagem2.height === this.imagem1.height) {
+      const dados2 = this.imagem2.data;
+      for (let i = 0; i < dados.length; i += 4) {
+        dados[i] = Math.min(255, dados[i] + dados2[i]);
+        dados[i + 1] = Math.min(255, dados[i + 1] + dados2[i + 1]);
+        dados[i + 2] = Math.min(255, dados[i + 2] + dados2[i + 2]);
       }
     } else {
-      const v = Number.isFinite(value) ? value : 0;
-      for (let i = 0; i < data.length; i += 4) {
-        data[i] = Math.min(255, data[i] + v);
-        data[i + 1] = Math.min(255, data[i + 1] + v);
-        data[i + 2] = Math.min(255, data[i + 2] + v);
+      const v = Number.isFinite(valor) ? valor : 0;
+      for (let i = 0; i < dados.length; i += 4) {
+        dados[i] = Math.min(255, dados[i] + v);
+        dados[i + 1] = Math.min(255, dados[i + 1] + v);
+        dados[i + 2] = Math.min(255, dados[i + 2] + v);
       }
     }
 
-    this.showResult(new ImageData(data, this.image1.width, this.image1.height));
+    this.mostrarResultado(new ImageData(dados, this.imagem1.width, this.imagem1.height));
   }
 
-  subtract(value = 0) {
-    if (!this.image1) return;
-    const data = new Uint8ClampedArray(this.image1.data);
+  subtrair(valor = 0) {
+    if (!this.imagem1) return;
+    const dados = new Uint8ClampedArray(this.imagem1.data);
 
-    if (this.image2 && this.image2.width === this.image1.width && this.image2.height === this.image1.height) {
-      const data2 = this.image2.data;
-      for (let i = 0; i < data.length; i += 4) {
-        data[i] = Math.max(0, data[i] - data2[i]);
-        data[i + 1] = Math.max(0, data[i + 1] - data2[i + 1]);
-        data[i + 2] = Math.max(0, data[i + 2] - data2[i + 2]);
+    if (this.imagem2 && this.imagem2.width === this.imagem1.width && this.imagem2.height === this.imagem1.height) {
+      const dados2 = this.imagem2.data;
+      for (let i = 0; i < dados.length; i += 4) {
+        dados[i] = Math.max(0, dados[i] - dados2[i]);
+        dados[i + 1] = Math.max(0, dados[i + 1] - dados2[i + 1]);
+        dados[i + 2] = Math.max(0, dados[i + 2] - dados2[i + 2]);
       }
     } else {
-      const v = Number.isFinite(value) ? value : 0;
-      for (let i = 0; i < data.length; i += 4) {
-        data[i] = Math.max(0, data[i] - v);
-        data[i + 1] = Math.max(0, data[i + 1] - v);
-        data[i + 2] = Math.max(0, data[i + 2] - v);
+      const v = Number.isFinite(valor) ? valor : 0;
+      for (let i = 0; i < dados.length; i += 4) {
+        dados[i] = Math.max(0, dados[i] - v);
+        dados[i + 1] = Math.max(0, dados[i + 1] - v);
+        dados[i + 2] = Math.max(0, dados[i + 2] - v);
       }
     }
 
-    this.showResult(new ImageData(data, this.image1.width, this.image1.height));
+    this.mostrarResultado(new ImageData(dados, this.imagem1.width, this.imagem1.height));
   }
 
-  multiply(value = 1) {
-    if (!this.image1) return;
-    const v = Number.isFinite(value) ? Math.max(0, value) : 1;
-    const data = new Uint8ClampedArray(this.image1.data);
+  multiplicar(valor = 1) {
+    if (!this.imagem1) return;
+    const v = Number.isFinite(valor) ? Math.max(0, valor) : 1;
+    const dados = new Uint8ClampedArray(this.imagem1.data);
 
-    for (let i = 0; i < data.length; i += 4) {
-      data[i] = Math.min(255, data[i] * v);
-      data[i + 1] = Math.min(255, data[i + 1] * v);
-      data[i + 2] = Math.min(255, data[i + 2] * v);
+    for (let i = 0; i < dados.length; i += 4) {
+      dados[i] = Math.min(255, dados[i] * v);
+      dados[i + 1] = Math.min(255, dados[i + 1] * v);
+      dados[i + 2] = Math.min(255, dados[i + 2] * v);
     }
 
-    this.showResult(new ImageData(data, this.image1.width, this.image1.height));
+    this.mostrarResultado(new ImageData(dados, this.imagem1.width, this.imagem1.height));
   }
 
-  divide(value = 1) {
-    if (!this.image1) return;
-    const v = Number.isFinite(value) ? value : 1;
-    const div = v <= 0 ? 1 : v; 
-    const data = new Uint8ClampedArray(this.image1.data);
+  dividir(valor = 1) {
+    if (!this.imagem1) return;
+    const v = Number.isFinite(valor) ? valor : 1;
+    const divisor = v <= 0 ? 1 : v;
+    const dados = new Uint8ClampedArray(this.imagem1.data);
 
-    for (let i = 0; i < data.length; i += 4) {
-      data[i] = Math.min(255, data[i] / div);
-      data[i + 1] = Math.min(255, data[i + 1] / div);
-      data[i + 2] = Math.min(255, data[i + 2] / div);
+    for (let i = 0; i < dados.length; i += 4) {
+      dados[i] = Math.min(255, dados[i] / divisor);
+      dados[i + 1] = Math.min(255, dados[i + 1] / divisor);
+      dados[i + 2] = Math.min(255, dados[i + 2] / divisor);
     }
 
-    this.showResult(new ImageData(data, this.image1.width, this.image1.height));
+    this.mostrarResultado(new ImageData(dados, this.imagem1.width, this.imagem1.height));
   }
 
-  toGrayscale() {
-    if (!this.image1) return;
+  escalaCinza() {
+    if (!this.imagem1) return;
 
-    const data = new Uint8ClampedArray(this.image1.data);
+    const dados = new Uint8ClampedArray(this.imagem1.data);
 
-    for (let i = 0; i < data.length; i += 4) {
-      const r = data[i];
-      const g = data[i + 1]; 
-      const b = data[i + 2];
+    for (let i = 0; i < dados.length; i += 4) {
+      const r = dados[i];
+      const g = dados[i + 1];
+      const b = dados[i + 2];
 
-      const gray = Math.round(0.299 * r + 0.587 * g + 0.114 * b);
+      const cinza = Math.round(0.299 * r + 0.587 * g + 0.114 * b);
 
-      data[i] = gray;
-      data[i + 1] = gray;
-      data[i + 2] = gray; 
+      dados[i] = cinza;
+      dados[i + 1] = cinza;
+      dados[i + 2] = cinza;
     }
 
-    this.showResult(new ImageData(data, this.image1.width, this.image1.height));
+    this.mostrarResultado(new ImageData(dados, this.imagem1.width, this.imagem1.height));
   }
 
-  async saveResult() {
-    if (!this.canvasOutput.width || !this.canvasOutput.height) return;
+  async salvarResultado() {
+    if (!this.telaResultado.width || !this.telaResultado.height) return;
 
     if ("showSaveFilePicker" in window) {
       try {
@@ -179,20 +179,20 @@ class ImageProcessor {
           suggestedName: "resultado.png",
           types: [{ description: "Imagens PNG", accept: { "image/png": [".png"] } }],
         });
-        const writable = await handle.createWritable();
-        const blob = await new Promise(resolve => this.canvasOutput.toBlob(resolve, "image/png"));
-        await writable.write(blob);
-        await writable.close();
+        const gravavel = await handle.createWritable();
+        const blob = await new Promise(resolve => this.telaResultado.toBlob(resolve, "image/png"));
+        await gravavel.write(blob);
+        await gravavel.close();
       } catch (err) {
         console.error("Erro ao salvar:", err);
       }
     } else {
       const link = document.createElement("a");
       link.download = "resultado.png";
-      link.href = this.canvasOutput.toDataURL("image/png");
+      link.href = this.telaResultado.toDataURL("image/png");
       link.click();
     }
   }
 }
 
-window.ImageProcessor = ImageProcessor;
+window.ProcessadorImagem = ProcessadorImagem;

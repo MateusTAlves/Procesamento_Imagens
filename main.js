@@ -1,80 +1,81 @@
-const canvas1 = document.getElementById("canvasInput1");
-const canvas2 = document.getElementById("canvasInput2");
-const canvasOutput = document.getElementById("canvasOutput");
+const tela1 = document.getElementById("telaEntrada1");
+const tela2 = document.getElementById("telaEntrada2");
+const telaResultado = document.getElementById("telaResultado");
 
-const processor = new ImageProcessor(canvas1, canvas2, canvasOutput);
+const processador = new ProcessadorImagem(tela1, tela2, telaResultado);
 
 // Elementos
-const enableImage2 = document.getElementById("enableImage2");
-const uploadImage1 = document.getElementById("uploadImage1");
-const uploadImage2 = document.getElementById("uploadImage2");
+const habilitarImagem2 = document.getElementById("habilitarImagem2");
+const enviarImagem1 = document.getElementById("enviarImagem1");
+const enviarImagem2 = document.getElementById("enviarImagem2");
 
-const intensityAddInput = document.getElementById("intensityAddInput");
-const intensitySubInput = document.getElementById("intensitySubInput");
-const intensityMultInput = document.getElementById("intensityMultInput");
-const intensityDivInput = document.getElementById("intensityDivInput");
+const Adicao = document.getElementById("Adicao");
+const Subtracao = document.getElementById("Subtracao");
+const Multiplicacao = document.getElementById("Multiplicacao");
+const Divisao = document.getElementById("Divisao");
 
-// Uploads
-uploadImage1.addEventListener("change", (e) => {
+// Upload de imagens
+enviarImagem1.addEventListener("change", (e) => {
   if (e.target.files && e.target.files.length > 0) {
-    processor.loadImage(e.target.files[0], 1);
+    processador.carregarImagem(e.target.files[0], 1);
   }
 });
 
-uploadImage2.addEventListener("change", (e) => {
-  if (e.target.files && e.target.files.length > 0 && enableImage2.checked) {
-    processor.loadImage(e.target.files[0], 2);
+enviarImagem2.addEventListener("change", (e) => {
+  if (e.target.files && e.target.files.length > 0 && habilitarImagem2.checked) {
+    processador.carregarImagem(e.target.files[0], 2);
   }
 });
 
-
-enableImage2.addEventListener("change", () => {
-  uploadImage2.disabled = !enableImage2.checked;
-  if (!enableImage2.checked) {
-    processor.image2 = null;
-    processor.ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
-    uploadImage2.value = "";
+habilitarImagem2.addEventListener("change", () => {
+  enviarImagem2.disabled = !habilitarImagem2.checked;
+  if (!habilitarImagem2.checked) {
+    processador.imagem2 = null;
+    processador.ctx2.clearRect(0, 0, tela2.width, tela2.height);
+    enviarImagem2.value = "";
   }
 });
 
-function applyOperation() {
-  if (!enableImage2.checked) processor.image2 = null;
+function aplicarOperacao() {
+  if (!habilitarImagem2.checked) processador.imagem2 = null;
 
-  const active = document.activeElement;
-  if (active === intensityAddInput) {
-    processor.add(parseInt(intensityAddInput.value) || 0);
-  } else if (active === intensitySubInput) {
-    processor.subtract(parseInt(intensitySubInput.value) || 0);
-  } else if (active === intensityMultInput) {
-    processor.multiply(parseFloat(intensityMultInput.value) || 1);
-  } else if (active === intensityDivInput) {
-    processor.divide(parseFloat(intensityDivInput.value) || 1);
+  const ativo = document.activeElement;
+  if (ativo === Adicao) {
+    processador.somar(parseInt(Adicao.value) || 0);
+  } else if (ativo === Subtracao) {
+    processador.subtrair(parseInt(Subtracao.value) || 0);
+  } else if (ativo === Multiplicacao) {
+    processador.multiplicar(parseFloat(Multiplicacao.value) || 1);
+  } else if (ativo === Divisao) {
+    processador.dividir(parseFloat(Divisao.value) || 1);
   }
 }
 
-[intensityAddInput, intensitySubInput, intensityMultInput, intensityDivInput]
-  .forEach(el => el.addEventListener("input", applyOperation));
+[Adicao, Subtracao, Multiplicacao, Divisao]
+  .forEach(el => el.addEventListener("input", aplicarOperacao));
 
-document.getElementById("addBtn").addEventListener("click", () => {
-  processor.add(parseInt(intensityAddInput.value) || 0);
+document.getElementById("btnAdicao").addEventListener("click", () => {
+  processador.somar(parseInt(Adicao.value) || 0);
 });
 
-document.getElementById("subBtn").addEventListener("click", () => {
-  processor.subtract(parseInt(intensitySubInput.value) || 0);
+document.getElementById("btnSubtracao").addEventListener("click", () => {
+  processador.subtrair(parseInt(Subtracao.value) || 0);
 });
 
-document.getElementById("multBtn").addEventListener("click", () => {
-  processor.multiply(parseFloat(intensityMultInput.value) || 1);
+document.getElementById("btnMultiplicacao").addEventListener("click", () => {
+  processador.multiplicar(parseFloat(Multiplicacao.value) || 1);
 });
 
-document.getElementById("divBtn").addEventListener("click", () => {
-  processor.divide(parseFloat(intensityDivInput.value) || 1);
+document.getElementById("btnDivisao").addEventListener("click", () => {
+  processador.dividir(parseFloat(Divisao.value) || 1);
 });
 
-document.getElementById("grayscaleBtn").addEventListener("click", () => {
-  processor.toGrayscale();
+// Botões de filtros
+document.getElementById("btnEscalaCinza").addEventListener("click", () => {
+  processador.escalaCinza();
 });
 
-document.getElementById("saveBtn").addEventListener("click", () => {
-  processor.saveResult();
+// Botão salvar
+document.getElementById("btnSalvar").addEventListener("click", () => {
+  processador.salvarResultado();
 });

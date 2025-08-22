@@ -8,65 +8,66 @@
 </head>
 
 <body>
-    <div class="main-container">
+    <div class="container-principal">
         <h1>Processamento de Imagens</h1>
 
-        <div class="main-row">
-            <div class="image-block">
+        <div class="linha-principal">
+            <div class="bloco-imagem">
                 <h3>Imagem 1 (Original)</h3>
-                <canvas id="canvasInput1"></canvas>
-                <input type="file" id="uploadImage1" accept="image/*" />
+                <canvas id="telaEntrada1"></canvas>
+                <input type="file" id="enviarImagem1" accept="image/*" />
             </div>
 
-            <div class="image-block">
+            <div class="bloco-imagem">
                 <h3>Imagem 2 (Opcional)</h3>
-                <canvas id="canvasInput2"></canvas>
-                <input type="file" id="uploadImage2" accept="image/*" />
-                <label class="checkbox-row">
-                    <input type="checkbox" id="enableImage2" checked />
+                <canvas id="telaEntrada2"></canvas>
+                <input type="file" id="enviarImagem2" accept="image/*" />
+                <label class="linha-checkbox">
+                    <input type="checkbox" id="habilitarImagem2" checked />
                     Usar Imagem 2
                 </label>
             </div>
 
-            <div class="image-block">
+            <div class="bloco-imagem">
                 <h3>Resultado</h3>
-                <canvas id="canvasOutput"></canvas>
-                <button id="saveBtn" class="btn btn-blue">Salvar Resultado</button>
+                <canvas id="telaResultado"></canvas>
+                <button id="btnSalvar" class="btn btn-azul">Salvar Resultado</button>
             </div>
 
-            <div class="operation-panel">
-                <h3>Operações Aritmeticas</h3>
+            <div class="painel-operacoes">
+                <h3>Operações Aritméticas</h3>
 
-                <div class="operation-row">
+                <div class="linha-operacao">
                     <label>Adição:</label>
-                    <input type="number" id="intensityAddInput" min="0" max="255" value="0" />
-                    <button id="addBtn" class="btn btn-green">Aplicar</button>
+                    <input type="number" id="Adicao" min="0" max="255" value="0" />
+                    <button id="btnAdicao" class="btn btn-verde">Aplicar</button>
                 </div>
 
-                <div class="operation-row">
+                <div class="linha-operacao">
                     <label>Subtração:</label>
-                    <input type="number" id="intensitySubInput" min="0" max="255" value="0" />
-                    <button id="subBtn" class="btn btn-green">Aplicar</button>
+                    <input type="number" id="Subtracao" min="0" max="255" value="0" />
+                    <button id="btnSubtracao" class="btn btn-verde">Aplicar</button>
                 </div>
 
-                <div class="operation-row">
+                <div class="linha-operacao">
                     <label>Multiplicação:</label>
-                    <input type="number" id="intensityMultInput" min="0" step="0.1" value="1" />
-                    <button id="multBtn" class="btn btn-green">Aplicar</button>
+                    <input type="number" id="Multiplicacao" min="0" step="0.1" value="1" />
+                    <button id="btnMultiplicacao" class="btn btn-verde">Aplicar</button>
                 </div>
 
-                <div class="operation-row">
+                <div class="linha-operacao">
                     <label>Divisão:</label>
-                    <input type="number" id="intensityDivInput" min="0.1" step="0.1" value="1" />
-                    <button id="divBtn" class="btn btn-green">Aplicar</button>
+                    <input type="number" id="Divisao" min="0.1" step="0.1" value="1" />
+                    <button id="btnDivisao" class="btn btn-verde">Aplicar</button>
                 </div>
             </div>
-            <div class="filters-panel">
+
+            <div class="painel-filtros">
                 <h3>Filtros</h3>
 
-                <div class="filter-row">
-                    <label>Escala de Cinza</label>
-                    <button id="grayscaleBtn" class="btn btn-green">Aplicar</button>
+                <div class="linha-filtro">
+                    <label>Escala de Cinza:</label>
+                    <button id="btnEscalaCinza" class="btn btn-verde">Aplicar</button>
                 </div>
             </div>
         </div>
