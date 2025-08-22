@@ -170,6 +170,56 @@ class ProcessadorImagem {
     this.mostrarResultado(new ImageData(dados, this.imagem1.width, this.imagem1.height));
   }
 
+  inverterHorizontal() {
+  if (!this.imagem1) return;
+
+  const largura = this.imagem1.width;
+  const altura = this.imagem1.height;
+  const dadosOriginais = this.imagem1.data;
+  const dadosInvertidos = new Uint8ClampedArray(dadosOriginais.length);
+
+  for (let y = 0; y < altura; y++) {
+    for (let x = 0; x < largura; x++) {
+      const posOriginal = (y * largura + x) * 4;
+      
+      const xInvertido = largura - 1 - x;
+      const posInvertida = (y * largura + xInvertido) * 4;
+
+      dadosInvertidos[posInvertida] = dadosOriginais[posOriginal];        
+      dadosInvertidos[posInvertida + 1] = dadosOriginais[posOriginal + 1]; 
+      dadosInvertidos[posInvertida + 2] = dadosOriginais[posOriginal + 2]; 
+      dadosInvertidos[posInvertida + 3] = dadosOriginais[posOriginal + 3]; 
+    }
+  }
+
+  this.mostrarResultado(new ImageData(dadosInvertidos, largura, altura));
+}
+
+inverterVertical() {
+  if (!this.imagem1) return;
+
+  const largura = this.imagem1.width;
+  const altura = this.imagem1.height;
+  const dadosOriginais = this.imagem1.data;
+  const dadosInvertidos = new Uint8ClampedArray(dadosOriginais.length);
+
+  for (let y = 0; y < altura; y++) {
+    for (let x = 0; x < largura; x++) {
+      const posOriginal = (y * largura + x) * 4;
+      
+      const yInvertido = altura - 1 - y;
+      const posInvertida = (yInvertido * largura + x) * 4;
+
+      dadosInvertidos[posInvertida] = dadosOriginais[posOriginal];
+      dadosInvertidos[posInvertida + 1] = dadosOriginais[posOriginal + 1];
+      dadosInvertidos[posInvertida + 2] = dadosOriginais[posOriginal + 2];
+      dadosInvertidos[posInvertida + 3] = dadosOriginais[posOriginal + 3];
+    }
+  }
+
+  this.mostrarResultado(new ImageData(dadosInvertidos, largura, altura));
+}
+
   async salvarResultado() {
     if (!this.telaResultado.width || !this.telaResultado.height) return;
 

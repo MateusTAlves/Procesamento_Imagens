@@ -75,6 +75,14 @@ document.getElementById("btnEscalaCinza").addEventListener("click", () => {
   processador.escalaCinza();
 });
 
+document.getElementById("btnInverterH").addEventListener("click", () => {
+  processador.inverterHorizontal();
+});
+
+document.getElementById("btnInverterC/B").addEventListener("click", () => {
+  processador.inverterVertical();
+});
+
 // Botão salvar
 document.getElementById("btnSalvar").addEventListener("click", () => {
   processador.salvarResultado();
