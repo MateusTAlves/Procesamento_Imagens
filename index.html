@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Processamento de Imagens</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Operações</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-group="arithmetic">
+                    <span>Aritmética</span>
+                </button>
+                <button class="nav-item" data-group="transform">
+                    <span>Transformações</span>
+                </button>
+                <button class="nav-item" data-group="histogram">
+                    <span>Histograma</span>
+                </button>
+                <button class="nav-item" data-group="lowpass">
+                    <span>Passa-Baixa</span>
+                </button>
+                <button class="nav-item" data-group="highpass">
+                    <span>Passa-Alta</span>
+                </button>
+                <button class="nav-item" data-group="morphology">
+                    <span>Morfologia</span>
+                </button>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Processamento de Imagens</h1>
+            </header>
+
+            <section class="image-section">
+                <div class="image-card">
+                    <div class="card-header">
+                        <h3>Imagem Original</h3>
+                    </div>
+                    <div class="canvas-wrapper">
+                        <canvas id="canvasInput1"></canvas>
+                    </div>
+                    <label class="upload-btn">
+                        <input type="file" id="uploadImage1" accept="image/*" class="file-input" />
+                        Escolher Imagem
+                    </label>
+                </div>
+
+                <div class="image-card">
+                    <div class="card-header">
+                        <h3>Imagem Opcional</h3>
+                        <label class="switch">
+                            <input type="checkbox" id="enableImage2" checked />
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="canvas-wrapper">
+                        <canvas id="canvasInput2"></canvas>
+                    </div>
+                    <label class="upload-btn">
+                        <input type="file" id="uploadImage2" accept="image/*" class="file-input" />
+                        Escolher Imagem
+                    </label>
+                </div>
+
+                <div class="image-card result-card">
+                    <div class="card-header">
+                        <h3>Resultado</h3>
+                    </div>
+                    <div class="canvas-wrapper">
+                        <canvas id="canvasOutput"></canvas>
+                    </div>
+                    <button id="saveBtn" class="btn btn-primary btn-large">
+                        Salvar Resultado
+                    </button>
+                </div>
+            </section>
+
+            <section class="operations-container">
+                <div class="operation-group active" id="group-arithmetic">
+                    <div class="group-header">
+                        <h2>Operações Aritméticas</h2>
+                    </div>
+                    
+                    <div class="operations-grid">
+                        <div class="operation-card">
+                            <label>Adição</label>
+                            <div class="input-row">
+                                <input type="number" id="intensityAddInput" min="0" max="255" value="0" />
+                                <button id="addBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Subtração</label>
+                            <div class="input-row">
+                                <input type="number" id="intensitySubInput" min="0" max="255" value="0" />
+                                <button id="subBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Multiplicação</label>
+                            <div class="input-row">
+                                <input type="number" id="intensityMultInput" min="0" step="0.1" value="1" />
+                                <button id="multBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Divisão</label>
+                            <div class="input-row">
+                                <input type="number" id="intensityDivInput" min="0.1" step="0.1" value="1" />
+                                <button id="divBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Diferença</label>
+                            <button id="differenceBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Blending (α)</label>
+                            <div class="input-row">
+                                <input type="number" id="blendingInput" min="0" max="1" step="0.1" value="0.5" />
+                                <button id="blendingBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Média</label>
+                            <button id="averageBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="operation-group" id="group-transform">
+                    <div class="group-header">
+                        <h2>Transformações</h2>
+                    </div>
+                    
+                    <div class="operations-grid">
+                        <div class="operation-card">
+                            <label>Escala de Cinza</label>
+                            <button id="grayscaleBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Espelhar Horizontal</label>
+                            <button id="flipHBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Espelhar Vertical</label>
+                            <button id="flipVBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Negativo</label>
+                            <button id="negativeBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Limiarização</label>
+                            <div class="input-row">
+                                <input type="number" id="thresholdInput" min="0" max="255" value="128" />
+                                <button id="thresholdBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>AND Lógico</label>
+                            <button id="andBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>OR Lógico</label>
+                            <button id="orBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>XOR Lógico</label>
+                            <button id="xorBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="operation-group" id="group-histogram">
+                    <div class="group-header">
+                        <h2>Histograma</h2>
+                    </div>
+                    
+                    <div class="operation-card full-width">
+                        <label>Equalização de Histograma</label>
+                        <button id="equalizeBtn" class="btn btn-secondary">Aplicar</button>
+                    </div>
+
+                    <div class="histogram-display">
+                        <div class="histogram-card">
+                            <h4>Original</h4>
+                            <canvas id="histogramOriginal" width="300" height="200"></canvas>
+                        </div>
+                        <div class="histogram-card">
+                            <h4>Equalizado</h4>
+                            <canvas id="histogramEqualized" width="300" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="operation-group" id="group-lowpass">
+                    <div class="group-header">
+                        <h2>Filtros Passa-Baixa</h2>
+                    </div>
+                    
+                    <div class="operations-grid">
+                        <div class="operation-card">
+                            <label>Filtro MAX</label>
+                            <div class="input-row">
+                                <input type="number" id="maxFilterSize" min="3" max="9" step="2" value="3" />
+                                <button id="maxFilterBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Filtro MIN</label>
+                            <div class="input-row">
+                                <input type="number" id="minFilterSize" min="3" max="9" step="2" value="3" />
+                                <button id="minFilterBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Filtro MEAN</label>
+                            <div class="input-row">
+                                <input type="number" id="meanFilterSize" min="3" max="9" step="2" value="3" />
+                                <button id="meanFilterBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Filtro MEDIANA</label>
+                            <div class="input-row">
+                                <input type="number" id="medianFilterSize" min="3" max="9" step="2" value="3" />
+                                <button id="medianFilterBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Filtro ORDEM</label>
+                            <div class="input-row">
+                                <input type="number" id="orderFilterSize" min="3" max="9" step="2" value="3" placeholder="Tamanho" />
+                                <input type="number" id="orderFilterRank" min="1" max="9" value="5" placeholder="Rank" />
+                                <button id="orderFilterBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Suavização Conservativa</label>
+                            <div class="input-row">
+                                <input type="number" id="conservativeSize" min="3" max="9" step="2" value="3" />
+                                <button id="conservativeBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Filtro Gaussiano</label>
+                            <div class="input-row">
+                                <input type="number" id="gaussianSize" min="3" max="9" step="2" value="3" placeholder="Tamanho" />
+                                <input type="number" id="gaussianSigma" min="0.1" max="5" step="0.1" value="1" placeholder="Sigma" />
+                                <button id="gaussianBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="operation-group" id="group-highpass">
+                    <div class="group-header">
+                        <h2>Filtros Passa-Alta</h2>
+                    </div>
+                    
+                    <div class="operations-grid">
+                        <div class="operation-card">
+                            <label>Prewitt</label>
+                            <button id="prewittBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Sobel</label>
+                            <button id="sobelBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Laplaciano</label>
+                            <button id="laplacianBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="operation-group" id="group-morphology">
+                    <div class="group-header">
+                        <h2>Operações Morfológicas</h2>
+                    </div>
+                    
+                    <div class="operations-grid">
+                        <div class="operation-card">
+                            <label>Dilatação</label>
+                            <div class="input-row">
+                                <input type="number" id="dilationSize" min="3" max="9" step="2" value="3" />
+                                <button id="dilationBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Erosão</label>
+                            <div class="input-row">
+                                <input type="number" id="erosionSize" min="3" max="9" step="2" value="3" />
+                                <button id="erosionBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Abertura</label>
+                            <div class="input-row">
+                                <input type="number" id="openingSize" min="3" max="9" step="2" value="3" />
+                                <button id="openingBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Fechamento</label>
+                            <div class="input-row">
+                                <input type="number" id="closingSize" min="3" max="9" step="2" value="3" />
+                                <button id="closingBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Contorno</label>
+                            <div class="input-row">
+                                <input type="number" id="contourSize" min="3" max="9" step="2" value="3" />
+                                <button id="contourBtn" class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="Classes/ImageProcessor.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
