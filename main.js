@@ -133,8 +133,24 @@ document.getElementById("xorBtn").addEventListener("click", () => {
   processor.logicalXor();
 });
 
+document.getElementById("notBtn").addEventListener("click", () => {
+  processor.logicalNot();
+});
+
 document.getElementById("equalizeBtn").addEventListener("click", () => {
   processor.equalizeHistogram();
+});
+
+document.getElementById("prewittBtn").addEventListener("click", () => {
+  processor.prewitt();
+});
+
+document.getElementById("prewittVerticalBtn").addEventListener("click", () => {
+  processor.prewittVertical();
+});
+
+document.getElementById("prewittHorizontalBtn").addEventListener("click", () => {
+  processor.prewittHorizontal();
 });
 
 document.getElementById("saveBtn").addEventListener("click", () => {

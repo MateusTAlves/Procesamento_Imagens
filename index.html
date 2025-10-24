@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Processamento de Imagens</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/utif@3.1.0/UTIF.js"></script>
 </head>
+
 <body>
     <div class="app-container">
         <aside class="sidebar">
@@ -18,6 +21,9 @@
                 </button>
                 <button class="nav-item" data-group="transform">
                     <span>Transformações</span>
+                </button>
+                <button class="nav-item" data-group="logic">
+                    <span>Portas Lógicas</span>
                 </button>
                 <button class="nav-item" data-group="histogram">
                     <span>Histograma</span>
@@ -48,7 +54,7 @@
                         <canvas id="canvasInput1"></canvas>
                     </div>
                     <label class="upload-btn">
-                        <input type="file" id="uploadImage1" accept="image/*" class="file-input" />
+                        <input type="file" id="uploadImage1" accept="image/*,.tif,.tiff" class="file-input" />
                         Escolher Imagem
                     </label>
                 </div>
@@ -65,7 +71,7 @@
                         <canvas id="canvasInput2"></canvas>
                     </div>
                     <label class="upload-btn">
-                        <input type="file" id="uploadImage2" accept="image/*" class="file-input" />
+                        <input type="file" id="uploadImage2" accept="image/*,.tif,.tiff" class="file-input" />
                         Escolher Imagem
                     </label>
                 </div>
@@ -88,7 +94,7 @@
                     <div class="group-header">
                         <h2>Operações Aritméticas</h2>
                     </div>
-                    
+
                     <div class="operations-grid">
                         <div class="operation-card">
                             <label>Adição</label>
@@ -146,7 +152,7 @@
                     <div class="group-header">
                         <h2>Transformações</h2>
                     </div>
-                    
+
                     <div class="operations-grid">
                         <div class="operation-card">
                             <label>Escala de Cinza</label>
@@ -175,7 +181,15 @@
                                 <button id="thresholdBtn" class="btn btn-secondary">Aplicar</button>
                             </div>
                         </div>
+                    </div>
+                </div>
 
+                <div class="operation-group" id="group-logic">
+                    <div class="group-header">
+                        <h2>Portas Lógicas</h2>
+                    </div>
+
+                    <div class="operations-grid">
                         <div class="operation-card">
                             <label>AND Lógico</label>
                             <button id="andBtn" class="btn btn-secondary btn-full">Aplicar</button>
@@ -190,6 +204,11 @@
                             <label>XOR Lógico</label>
                             <button id="xorBtn" class="btn btn-secondary btn-full">Aplicar</button>
                         </div>
+
+                        <div class="operation-card">
+                            <label>NOT Lógico</label>
+                            <button id="notBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
                     </div>
                 </div>
 
@@ -197,7 +216,7 @@
                     <div class="group-header">
                         <h2>Histograma</h2>
                     </div>
-                    
+
                     <div class="operation-card full-width">
                         <label>Equalização de Histograma</label>
                         <button id="equalizeBtn" class="btn btn-secondary">Aplicar</button>
@@ -219,7 +238,7 @@
                     <div class="group-header">
                         <h2>Filtros Passa-Baixa</h2>
                     </div>
-                    
+
                     <div class="operations-grid">
                         <div class="operation-card">
                             <label>Filtro MAX</label>
@@ -256,8 +275,10 @@
                         <div class="operation-card">
                             <label>Filtro ORDEM</label>
                             <div class="input-row">
-                                <input type="number" id="orderFilterSize" min="3" max="9" step="2" value="3" placeholder="Tamanho" />
-                                <input type="number" id="orderFilterRank" min="1" max="9" value="5" placeholder="Rank" />
+                                <input type="number" id="orderFilterSize" min="3" max="9" step="2" value="3"
+                                    placeholder="Tamanho" />
+                                <input type="number" id="orderFilterRank" min="1" max="9" value="5"
+                                    placeholder="Rank" />
                                 <button id="orderFilterBtn" class="btn btn-secondary">Aplicar</button>
                             </div>
                         </div>
@@ -273,8 +294,10 @@
                         <div class="operation-card">
                             <label>Filtro Gaussiano</label>
                             <div class="input-row">
-                                <input type="number" id="gaussianSize" min="3" max="9" step="2" value="3" placeholder="Tamanho" />
-                                <input type="number" id="gaussianSigma" min="0.1" max="5" step="0.1" value="1" placeholder="Sigma" />
+                                <input type="number" id="gaussianSize" min="3" max="9" step="2" value="3"
+                                    placeholder="Tamanho" />
+                                <input type="number" id="gaussianSigma" min="0.1" max="5" step="0.1" value="1"
+                                    placeholder="Sigma" />
                                 <button id="gaussianBtn" class="btn btn-secondary">Aplicar</button>
                             </div>
                         </div>
@@ -285,11 +308,21 @@
                     <div class="group-header">
                         <h2>Filtros Passa-Alta</h2>
                     </div>
-                    
+
                     <div class="operations-grid">
                         <div class="operation-card">
                             <label>Prewitt</label>
                             <button id="prewittBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Prewitt Vertical (bordas verticais)</label>
+                            <button id="prewittVerticalBtn" class="btn btn-secondary btn-full">Aplicar</button>
+                        </div>
+
+                        <div class="operation-card">
+                            <label>Prewitt Horizontal (bordas horizontais)</label>
+                            <button id="prewittHorizontalBtn" class="btn btn-secondary btn-full">Aplicar</button>
                         </div>
 
                         <div class="operation-card">
@@ -308,7 +341,7 @@
                     <div class="group-header">
                         <h2>Operações Morfológicas</h2>
                     </div>
-                    
+
                     <div class="operations-grid">
                         <div class="operation-card">
                             <label>Dilatação</label>
@@ -358,4 +391,5 @@
     <script src="Classes/ImageProcessor.js"></script>
     <script src="main.js"></script>
 </body>
+
 </html>

@@ -370,10 +370,12 @@ input[type="number"]::placeholder {
 #histogramOriginal,
 #histogramEqualized {
   width: 100%;
-  height: auto;
+  height: 200px;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
-  background: #f8fafc;
+  background: #ffffff;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 @media (max-width: 1024px) {
